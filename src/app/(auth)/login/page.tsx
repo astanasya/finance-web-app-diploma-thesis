@@ -67,20 +67,7 @@ export default function LoginPage() {
             Sign in to continue your journey to financial freedom!
           </p>
           
-          <div className="mt-12 flex items-center gap-4">
-            <div className="flex -space-x-3">
-                {[
-                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop",
-                "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop",
-                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
-                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
-                ].map((url, i) => (
-                <img key={i} src={url} alt="User" className="h-10 w-10 rounded-full border-2 border-[#0d1111] object-cover" />
-                ))}
-            </div>
-            <p className="text-sm text-gray-400">Over <span className="text-primary-500 font-bold">32k users</span> love us</p>
-          </div>
+          
         </div>
         
         <div className="text-xs text-gray-600 uppercase tracking-[0.2em]">© 2025 Ease Budget UI Kit</div>
