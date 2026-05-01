@@ -5,6 +5,6 @@ import { authConfig } from "./auth.config";
 export default NextAuth(authConfig).auth;
 
 export const config = {
-  // Копіюй цей рядок, він виключає перевірку статичних файлів, що економить місце
+  // Виключаємо перевірку статичних файлів для економії ліміту
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
