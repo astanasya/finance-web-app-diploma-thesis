@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  accounts          Account[]
+  categories        Category[]
+  transactions      Transaction[]
+  goals             Goal[]
+  budgetEnvelopes   BudgetEnvelope[]
+  dailyLimit        DailyLimit?
+  dashboardSettings DashboardSettings?
+}
+
+model Account {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade) // OK
+  name         String
+  type         String // "DEBIT", "CASH", "CREDIT"
+  balance      Float         @default(0)
+  currency     String        @default("USD")
+  transactions Transaction[]
+}
+
+model Category {
+  id           String        @id @default(cuid())
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade) // ДОДАНО
+  name         String
+  type         String // "INCOME" або "EXPENSE"
+  icon         String?
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade) // ДОДАНО
+  accountId   String
+  account     Account   @relation(fields: [accountId], references: [id], onDelete: Cascade) // ДОДАНО
+  amount      Float
+  type        String
+  title       String
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull) // ЗМІНЕНО НА SetNull
+  date        DateTime  @default(now())
+  description String?
+}
+
+model Goal {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade) // ДОДАНО
+  name          String
+  targetAmount  Float
+  currentAmount Float    @default(0)
+  startDate     DateTime @default(now())
+  deadline      DateTime
+  createdAt     DateTime @default(now())
+}
+
+model BudgetEnvelope {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade) // ДОДАНО
+  name        String
+  amount      Float
+  categoryIds String[]
+  month       Int
+  year        Int
+  createdAt   DateTime @default(now())
+}
+
+model DailyLimit {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount Float
+}
+
+model DashboardSettings {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  showTotalBalance  Boolean @default(true)
+  showTotalIncome   Boolean @default(true)
+  showTotalExpenses Boolean @default(true)
+  showTotalSavings  Boolean @default(true)
+
+  showMonthlyBudget       Boolean @default(true)
+  showSpendingLimits      Boolean @default(true)
+  showSavingGoals         Boolean @default(true)
+  showRecentTransactions  Boolean @default(true)
+  showTransactionStats    Boolean @default(true)
+  showTransactionOverview Boolean @default(true)
+  showBalanceOverview     Boolean @default(true)
+}
