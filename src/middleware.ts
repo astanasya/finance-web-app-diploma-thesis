@@ -1,14 +1,10 @@
+// src/middleware.ts
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 
-const { auth } = NextAuth(authConfig);
-export { auth as middleware } from "@/auth";
-
-export default auth((req) => {
-  // Тут можна додати додаткову логіку, але для початку залишаємо так
-});
+export default NextAuth(authConfig).auth;
 
 export const config = {
-  // Захищаємо всі сторінки дашборду
-  matcher: ["/dashboard/:path*", "/wallet/:path*", "/analytics/:path*", "/goals/:path*", "/budget/:path*", "/categories/:path*", "/transactions/:path*"],
+  // Копіюй цей рядок, він виключає перевірку статичних файлів, що економить місце
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
