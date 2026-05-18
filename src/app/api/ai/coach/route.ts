@@ -40,7 +40,7 @@ export async function POST(req: Request) {
 
     // --- 2. ФОРМУВАННЯ СИСТЕМНОГО ПРОМТУ ---
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Рекомендую flash версію для швидкості
+    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" }); // Рекомендую flash версію для швидкості
 
     const prompt = `
       You are an expert AI Financial Coach. Your analysis must be based on the provided mathematical KPIs.
