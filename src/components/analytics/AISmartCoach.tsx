@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Sparkles, RefreshCw } from "lucide-react";
 
 export function AISmartCoach({ transactions, totalIncome, totalExpenses, envelopes, goals }: any) {
-  const [advice, setAdvice] = useState<string>("Аналізую ваші фінанси...");
+  const [advice, setAdvice] = useState<string>("I'm analysing your finances...");
   const [loading, setLoading] = useState(false);
 
   const fetchAdvice = async () => {
@@ -25,7 +25,7 @@ export function AISmartCoach({ transactions, totalIncome, totalExpenses, envelop
     const data = await res.json();
     setAdvice(data.text);
   } catch (e) {
-    setAdvice("Не вдалося отримати пораду. Спробуйте пізніше.");
+    setAdvice("We were unable to provide advice. Please try again later.");
   } finally {
     setLoading(false);
   }

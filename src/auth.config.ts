@@ -25,5 +25,5 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [], // Порожній масив тут обов'язковий
+  providers: [], // Порожній масив 
 } satisfies NextAuthConfig;
